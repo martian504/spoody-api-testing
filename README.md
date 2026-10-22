@@ -1,8 +1,8 @@
 
-spoody-api-testing/
+fitflow-api-testing/
 ├── README.md
 ├── postman/
-│   ├── spoody.postman_collection.json
+│   ├── FitFlow.postman_collection.json
 │   └── environment.json
 ├── docs/
 │   ├── api-test-plan.md
