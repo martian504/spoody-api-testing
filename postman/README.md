@@ -1,93 +1,65 @@
-# Spoody — API Testing Project
+# Postman API Collections
 
-A hands-on API testing portfolio project focused on validating workout management functionality using Postman, JavaScript, and JSON Server.
+This folder contains Postman collections used for functional API testing of the **Spoody Workout Management API**.
 
 ## Project Overview
 
-Spoody is a fitness workout tracking API testing project designed to develop practical skills in API testing, test automation, debugging, and quality assurance.
+Spoody is a practice API testing project focused on workout tracking and management.
 
-The project demonstrates how REST API endpoints can be tested through structured test cases and automated assertions.
+The project uses Postman to send HTTP requests, validate API responses, and automate test assertions.
 
-## Technologies and Tools
+## Tools and Technologies
 
-- **Postman:** API testing and collection execution
-- **JavaScript:** Automated test scripts
-- **JSON Server:** Local mock REST API
-- **JSON:** Request and response data
-- **GitHub:** Documentation and version control
+- Postman — API requests and automated tests
+- JSON Server — Local mock REST API
+- JavaScript — Postman test scripts
+- JSON — Request and response data
+- GitHub — Version control and documentation
 
-## API Functionalities
+## API Endpoints Tested
 
-The project covers workout management operations:
-
-| HTTP Method | Endpoint | Description |
+| Method | Endpoint | Purpose |
 |---|---|---|
 | POST | `/workouts` | Create a workout |
 | GET | `/workouts/:id` | Retrieve a workout |
-| PATCH | `/workouts/:id` | Update workout details |
+| PATCH | `/workouts/:id` | Update a workout |
 | DELETE | `/workouts/:id` | Delete a workout |
-| GET | `/workouts/:id` | Verify workout deletion |
+| GET | `/workouts/:id` | Verify the workout was deleted |
 
-## Positive API Testing Results
+## Positive API Testing
 
-The complete workout management workflow was tested using Postman Collection Runner.
+A complete CRUD workflow was executed using Postman Collection Runner.
 
-| Metric | Result |
-|---|---|
-| API requests | 5 |
-| Automated assertions | 10 |
-| Passed | 10 |
-| Failed | 0 |
-| Execution errors | 0 |
+**Execution results:**
+- Requests executed: 5
+- Automated assertions: 10
+- Passed: 10
+- Failed: 0
+- Errors: 0
 
-**Result:** All 10 automated assertions passed.
+The workflow verified that a workout could be created, retrieved, updated, deleted, and subsequently return HTTP 404 when requested again.
 
-### Tested Workflow
+## Test Automation
 
-1. Create a workout using POST.
-2. Retrieve the created workout using GET.
-3. Update workout details using PATCH.
-4. Delete the workout using DELETE.
-5. Verify deletion using GET and expect HTTP 404.
+Postman scripts were used to:
 
-Generated workout IDs were stored as Postman collection variables and reused throughout the workflow.
+- Validate HTTP status codes.
+- Verify response fields and values.
+- Confirm workout IDs.
+- Store generated workout IDs in collection variables.
+- Reuse workout IDs across requests.
+- Validate successful deletion.
 
 ## Test Environment
 
-The project currently uses a local JSON Server instance.
+- Base URL: `http://localhost:3001`
+- API: JSON Server
+- Test execution: Postman Collection Runner
 
-Base URL: `http://localhost:3001`
+The API runs locally and is not publicly hosted.
 
-The API is not publicly deployed.
+## Next Phase
 
-## Project Structure
+Negative API testing is planned to evaluate invalid inputs, nonexistent resources, and API error handling.
 
-- `README.md` — Main project documentation
-- `postman/` — Postman collections and documentation
-- `LICENSE` — MIT license
-
-Additional test documentation and evidence will be organized as the project develops.
-
-## Next Steps
-
-- Implement negative API test scenarios.
-- Test invalid request data.
-- Validate error responses.
-- Document test cases and defects.
-- Expand automated test coverage.
-
-## Learning Objectives
-
-This project is part of a practical learning portfolio aimed at developing:
-
-- REST API testing
-- HTTP methods and status codes
-- Test case design
-- JavaScript assertions
-- Test automation
-- Debugging and defect reporting
-- Technical documentation
-
-## License
-
-This project is licensed under the MIT License.
+Results will be documented after execution.
