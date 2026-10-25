@@ -60,21 +60,34 @@ Base URL: `http://localhost:3001`
 
 The API is not publicly deployed.
 
+
 ## Project Structure
 
 - `README.md` — Main project documentation
 - `postman/` — Postman collections and documentation
+- `docs/test-cases.md` — Functional API test cases
+- `docs/negative-testing.md` — Negative API testing scenarios and findings
+- `docs/negative-test-results.png` — Negative testing execution evidence
+- `positive-test-results.png` — Positive testing execution evidence
 - `LICENSE` — MIT license
 
-Additional test documentation and evidence will be organized as the project develops.
+### Test Documentation
+
+- [Functional Test Cases](docs/test-cases.md)
+- [Negative API Testing](docs/negative-testing.md)
+- [Positive Test Results](positive-test-results.png)
+- [Negative Test Results](docs/negative-test-results.png)
+  
 
 ## Next Steps
 
-- Implement negative API test scenarios.
-- Test invalid request data.
-- Validate error responses.
-- Document test cases and defects.
-- Expand automated test coverage.
+
+- Expand negative testing with additional invalid input scenarios.
+- Investigate missing-field validation and document the mock API's limitations.
+- Add automated assertions for additional edge cases.
+- Improve test data management and cleanup.
+- Explore running Postman collections through Newman or Postman CLI.
+
 
 ## Learning Objectives
 
