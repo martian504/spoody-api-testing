@@ -1,0 +1,374 @@
+{
+  "info": {
+    "_postman_id": "95c363d0-d85f-41e7-a5e7-41e4d93ef530",
+    "name": "Workout Management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59081584",
+    "_collection_link": "https://go.postman.co/collection/59081584-95c363d0-d85f-41e7-a5e7-41e4d93ef530?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Create Workout",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const data = pm.response.json();\npm.collectionVariables.set(\"workoutId\", data.id);\nconsole.log(\"Saved workoutId:\", data.id);\n\npm.test(\"Workout created successfully\", function () {\n    pm.response.to.have.status(201);\n});\n\nconst workout = pm.response.json();\n\npm.collectionVariables.set(\"workoutId\", workout.id);\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userId\": 1,\r\n  \"exercise\": \"Push Up\",\r\n  \"durationMinutes\": 20,\r\n  \"sets\": 4,\r\n  \"repetitions\": 15\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/workouts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Workout by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Exercise is Push Up\", function () {\r\n    const data = pm.response.json();\r\n    pm.expect(data.exercise).to.eql(\"Push Up\");\r\n});\r\n\r\npm.test(\"Workout has an ID\", function () {\r\n    const data = pm.response.json();\r\n    pm.expect(data.id).to.exist;\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/workouts/{{workoutId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts",
+            "{{workoutId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Nonexistent Workout ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\r\npm.test(\"Nonexistent workout returns 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Error message is Not Found\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.error).to.eql(\"Not Found\");\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/workouts/nonexistent-99999",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts",
+            "nonexistent-99999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Workout",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Workout updated successfully\", function () {\r\n    const data = pm.response.json();\r\n\r\n    pm.expect(data.durationMinutes).to.eql(30);\r\n    pm.expect(data.sets).to.eql(5);\r\n    pm.expect(data.repetitions).to.eql(20);\r\n});\r\n\r\npm.test(\"Workout ID remains unchanged\", function () {\r\n    const data = pm.response.json();\r\n\r\n    pm.expect(String(data.id)).to.eql(\r\n        pm.collectionVariables.get(\"workoutId\")\r\n    );\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n{\r\n  \"durationMinutes\": 30,\r\n  \"sets\": 5,\r\n  \"repetitions\": 20\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/workouts/{{workoutId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts",
+            "{{workoutId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Workout",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\r\npm.test(\"Workout deleted successfully\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/workouts/{{workoutId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts",
+            "{{workoutId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Workout Deleted",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\r\npm.test(\"Deleted workout returns 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Workout no longer exists\", function () {\r\n    const data = pm.response.json();\r\n    pm.expect(data.error).to.eql(\"Not Found\");\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userId\": 1,\r\n  \"exercise\": \"Push Up\",\r\n  \"durationMinutes\": 20,\r\n  \"sets\": 4,\r\n  \"repetitions\": 15\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/workouts/{{workoutId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts",
+            "{{workoutId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "NEG-02 - Missing Required Fields",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\r\npm.test(\"Mock API accepts incomplete workout\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Created workout is missing optional validation fields\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.not.have.property(\"durationMinutes\");\r\n    pm.expect(response).to.not.have.property(\"sets\");\r\n    pm.expect(response).to.not.have.property(\"repetitions\");\r\n});\r\n\r\nconst createdWorkout = pm.response.json();\r\n\r\nif (pm.response.code === 201 && createdWorkout.id) {\r\n    pm.collectionVariables.set(\r\n        \"incompleteWorkoutId\",\r\n        createdWorkout.id\r\n    );\r\n}\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n{\r\n  \"userId\": 1,\r\n  \"exercise\": \"Squat\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/workouts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cleanup - Delete Incomplete Workout",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\npm.test(\"Incomplete workout deleted successfully\", function () {\n    pm.response.to.have.status(200);\n});\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/workouts/{{incompleteWorkoutId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts",
+            "{{incompleteWorkoutId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Incomplete Workout Deleted",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "\r\npm.test(\"Deleted incomplete workout returns 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Deleted workout returns Not Found error\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.error).to.eql(\"Not Found\");\r\n});\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/workouts/{{incompleteWorkoutId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "workouts",
+            "{{incompleteWorkoutId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "LocalHost",
+      "value": ""
+    },
+    {
+      "key": "mainHost",
+      "value": ""
+    },
+    {
+      "key": "workoutId",
+      "value": ""
+    },
+    {
+      "key": "incompleteWorkoutId",
+      "value": "",
+      "disabled": true
+    },
+    {
+      "key": "incompleteWorkoutId",
+      "value": ""
+    }
+  ]
+}
